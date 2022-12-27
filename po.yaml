@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: image-puller
+spec:
+  containers:
+  - name: image-puller-container
+    image: dhcp-8-34-226.telco5gran.eng.rdu2.redhat.com:8443/vg/img-pull-go:latest
+    imagePullPolicy: Always
+    command:
+    - /usr/local/bin/img-pull-go
+    args:
+    - docker://docker.io/library/busybox:latest
+    securityContext:
+      privileged: true
+      runAsUser: 1000
+  nodeSelector:
+    node-role.kubernetes.io/worker: ''
+  restartPolicy: Never                  
